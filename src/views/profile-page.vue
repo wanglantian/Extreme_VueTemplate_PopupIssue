@@ -1,49 +1,36 @@
 <template>
   <div class="app-container">
-    <DxButton
-      :width="120"
-      text="ShowPopup"
-      type="success"
-      styling-mode="outlined"
-      @click="showPopup"
-    />
-    <DxPopup :visible="popupVisible" :hide-on-outside-click="false" :show-close-button="false" container=".app-container" height="80%" width="80%"
-        title="Search">
-        <DxPosition
-            my="center"
-            at="center"
-            of=".app-container"
-        />
-        <DxButton
-          :width="120"
-          text="HidePopup"
-          type="success"
-          styling-mode="outlined"
-          @click="hidePopup"
-        />
-      </DxPopup>
+    <DxDataGrid
+    :data-source="arr"
+    :columns="columns"
+    :show-borders="true"
+    height="500px"
+    style="padding:50px"
+  />
   </div>
 </template>
 
 <script setup name="Profile">
-import DxButton from 'devextreme-vue/button';
-import { DxPopup,DxPosition } from 'devextreme-vue/popup';
-import {ref,onActivated, onDeactivated,onMounted} from 'vue'
+import DxDataGrid from 'devextreme-vue/data-grid';
 
-const popupVisible = ref(true)
+import {onActivated, onDeactivated,onMounted} from 'vue'
 
-function showPopup(){
-  console.log('showPopup',popupVisible.value)
-  popupVisible.value = true
+
+let columns = [];
+let arr = [];
+for(let i=0;i<20;i++){
+  let columnName = 'column' + i;
+  columns.push(columnName);
+  for(let j = 0;j<20;j++){
+    if(!arr[j]) arr[j] = {};
+    arr[j][columnName] = j;
+  }
 }
 
-function hidePopup(){
-  console.log('hidePopup',popupVisible.value)
-  popupVisible.value = false
-}
+
 
 onActivated(()=>{
-  console.log('onActivated')
+
 })
 
 onDeactivated(()=>{
